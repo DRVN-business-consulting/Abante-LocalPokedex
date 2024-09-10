@@ -12,7 +12,7 @@ export default function PokemonDetail() {
 
   const navigation = useNavigation();
   const { theme } = useTheme();
-  const { getPokemon } = usePokemons();
+  const { getPokemonById, API_URL } = usePokemons();
 
   const getTypeColor = (type) => {
     switch (type) {
@@ -55,7 +55,7 @@ export default function PokemonDetail() {
 
   const fetchPokemonData = async () => {
     try {
-      const data = await getPokemon(id);
+      const data = await getPokemonById(id);
       if (data) {
         setPokemon(data);
       } else {
@@ -97,7 +97,7 @@ export default function PokemonDetail() {
       <Text style={styles(theme).title}>{pokemon.name?.english || 'Unknown Pokémon'}</Text>
       <Image
         style={styles(theme).image}
-        source={{ uri: pokemon.image?.cache_hi_res || 'default-image-uri' }} // Provide a default image URI
+        source={{ uri: API_URL + pokemon.image.hi_res || 'default-image-uri' }} // Provide a default image URI
       />
       <View style={styles(theme).infoContainer}>
         <Text style={styles(theme).subTitle}>Id#: {pokemon.id || 'N/A'}</Text>

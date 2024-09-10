@@ -4,9 +4,11 @@ import { useTheme } from '../../../src/context/Theme';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as FileSystem from 'expo-file-system';
+import { usePokemons } from '../../../src/context/PokemonContext';
 
 export default function SettingTab() {
   const { theme, setTheme } = useTheme();
+  const {fetchPokemons, reset} = usePokemons()
 
   // Function to clear downloaded images from filesystem
   const clearDownloadedImages = async () => {
@@ -34,12 +36,18 @@ export default function SettingTab() {
     try {
       await AsyncStorage.clear(); // Clear AsyncStorage
       await clearDownloadedImages(); // Clear downloaded images
+      reset()
       Alert.alert('Success', 'Storage and downloaded images cleared successfully!');
     } catch (error) {
       Alert.alert('Error', 'Failed to clear storage.');
       console.error(error);
     }
   };
+
+
+  const addPokemon = () =>{
+    router.push('/pokemon/create')
+  }
 
   const toggleTheme = (isTrue) => {
     if (isTrue) setTheme('dark');
@@ -60,6 +68,9 @@ export default function SettingTab() {
       <Button title='Log out' onPress={() => { router.replace('/'); }} />
 
       <Button title='Clear Storage' onPress={clearStorage} />
+
+      <Button title='Add pokemon' onPress={addPokemon} />
+      <Button title='Fetch' onPress={fetchPokemons} />
 
       <StatusBar style="auto" />
     </View >

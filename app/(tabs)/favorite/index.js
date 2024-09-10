@@ -7,7 +7,6 @@ import { useFavorites } from '../../../src/context/FavoritePokemon';
 export default function FavoritesScreen() {
   const { theme } = useTheme();
   const { favorites } = useFavorites();
-  console.log(favorites)
 
   const styles = StyleSheet.create({
     container: {

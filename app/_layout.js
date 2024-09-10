@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
 import { ThemeProvider } from "../src/context/Theme";
-import { PokemonProvider } from "../src/context/PokemonContext";
 import { FavoritePokemonProvider } from "../src/context/FavoritePokemon";
+import { PokemonProvider } from "../src/context/PokemonContext";
 
 
 export default function AppLayout() {
@@ -28,6 +28,20 @@ export default function AppLayout() {
                             name="pokemon/[id]"
                             options={{
                                 title: 'Pokemon Profile',
+                                headerShown: true
+                            }}
+                        />
+                        <Stack.Screen
+                            name="pokemon/create/index"
+                            options={{
+                                title: 'Create Pokemon',
+                                headerShown: true
+                            }}
+                        />
+                        <Stack.Screen
+                            name="pokemon/edit/[id]"
+                            options={{
+                                title: 'Change Pokemon Name',
                                 headerShown: true
                             }}
                         />

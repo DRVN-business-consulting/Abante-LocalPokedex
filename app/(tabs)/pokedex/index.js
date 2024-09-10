@@ -6,8 +6,9 @@ import ProfileCard from '../../../src/components/pokemon-card';
 import { usePokemons } from '../../../src/context/PokemonContext'; // Import the context
 
 export default function PokedexScreen() {
+  const API_URL = 'http://192.168.0.13'
   const { theme } = useTheme();
-  const { pokemons, loading } = usePokemons();
+  const { pokemons } = usePokemons();
 
   const [filteredData, setFilteredData] = useState([]);
   const [selectedType, setSelectedType] = useState('');
@@ -129,15 +130,9 @@ export default function PokedexScreen() {
     }
   };
 
-  if (loading) {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" color="#007BFF" />
-      </View>
-    );
-  }
 
   return (
+    
     <View style={[styles.container, theme ? styles.background : styles.backgroundDark]}>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.typeContainer}>
         <TouchableOpacity onPress={() => setSelectedType('')}>
@@ -161,7 +156,7 @@ export default function PokedexScreen() {
         renderItem={({ item }) => (
           <ProfileCard
             id={item.id}
-            imageUrl={item.image.cache_hi_res}
+            imageUrl={API_URL+ item.image.sprite}
             name={item.name.english}
             type={item.type}
           />

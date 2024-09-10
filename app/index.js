@@ -4,12 +4,10 @@ import { useTheme } from '../src/context/Theme';
 import { useEffect, useState } from 'react';
 import { router } from 'expo-router';
 import * as SecureStore from 'expo-secure-store';
-import { usePokemons } from '../src/context/PokemonContext';
 
 export default function App() {
   const { theme } = useTheme();
   const [token, setToken] = useState('');
-  const { loading } = usePokemons(); // Access loading state from context
 
   const TOKEN_KEY = 'authToken';
   const HARDCODED_TOKEN = 'pass';
@@ -62,12 +60,7 @@ export default function App() {
 
   return (
     <View style={[styles.container, (theme ? styles.background : styles.backgroundDark)]}>
-      {loading ? (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={theme ? '#121212' : '#FFF'} />
-          <Text style={[styles.loadingText, { color: theme ? '#121212' : '#FFF' }]}>Loading...</Text>
-        </View>
-      ) : (
+      
         <>
           <Text
             style={[(theme ? styles.text : styles.textDark), { fontSize: 30, fontWeight: 'bold', fontStyle: 'italic' }]}
@@ -91,7 +84,7 @@ export default function App() {
             <Text style={theme ? styles.text : styles.textDark}>Log in</Text>
           </TouchableOpacity>
         </>
-      )}
+
 
       <StatusBar style="auto" />
     </View>

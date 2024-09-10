@@ -3,11 +3,14 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { useTheme } from '../context/Theme';
 import { useRouter } from 'expo-router';
 import { useFavorites } from '../context/FavoritePokemon';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { usePokemons } from '../context/PokemonContext';
 
 export default function ProfileCard({ id, name, type, imageUrl }) {
     const { theme } = useTheme();
     const { addFavorite, removeFavorite, favorites } = useFavorites();
     const router = useRouter();
+    const { deletePokemon } = usePokemons(0)
 
     const handlePress = () => {
         router.push(`/pokemon/${id}`);
@@ -22,6 +25,8 @@ export default function ProfileCard({ id, name, type, imageUrl }) {
             addFavorite({ id, name, type, imageUrl });
         }
     };
+
+
 
     const styles = StyleSheet.create({
         card: {
@@ -114,6 +119,26 @@ export default function ProfileCard({ id, name, type, imageUrl }) {
                     tintColor={isFavorite ? '#F06449' : (theme ? '#000' : '#FFF')} // Change icon color based on favorite status
                 />
             </TouchableOpacity>
+            <TouchableOpacity onPress={() => router.push(`/pokemon/edit/${id}`)} style={styles.favoriteIcon}>
+                <Image
+                    source={require('../../assets/edit.png')}
+                    resizeMode="contain"
+                    style={{ height: 25, width: 25 }}
+                    tintColor={(theme ? '#000' : '#FFF')} // Change icon color based on favorite status
+                />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={async() => {
+                deletePokemon(id)
+                removeFavorite(id)
+            }} style={styles.favoriteIcon}>
+                <Image
+                    source={require('../../assets/garbage-bag.png')}
+                    resizeMode="contain"
+                    style={{ height: 25, width: 25 }}
+                    tintColor={(theme ? '#000' : '#FFF')} // Change icon color based on favorite status
+                />
+            </TouchableOpacity>
         </View>
     );
 }
+
