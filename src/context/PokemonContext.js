@@ -32,7 +32,7 @@ export const PokemonProvider = ({ children }) => {
       
       // Filter out duplicates based on `.id`
       const uniquePokemons = data.reduce((acc, pokemon) => {
-        if (!acc.some(p => p.id === pokemon.id)) {
+        if (!acc.some(p => p.id == pokemon.id)) {
           acc.push(pokemon);
         }
         return acc;
@@ -63,7 +63,7 @@ export const PokemonProvider = ({ children }) => {
     try {
       setPokemons(prevPokemons => {
         const updatedPokemons = prevPokemons.map(pokemon =>
-          pokemon.id === updatedPokemon.id ? updatedPokemon : pokemon
+          pokemon.id == updatedPokemon.id ? updatedPokemon : pokemon
         );
         AsyncStorage.setItem('pokemons', JSON.stringify(updatedPokemons));
         return updatedPokemons;
@@ -77,7 +77,7 @@ export const PokemonProvider = ({ children }) => {
   const deletePokemon = async (pokemonId) => {
     try {
       setPokemons(prevPokemons => {
-        const updatedPokemons = prevPokemons.filter(pokemon => pokemon.id !== pokemonId);
+        const updatedPokemons = prevPokemons.filter(pokemon => pokemon.id != pokemonId);
         AsyncStorage.setItem('pokemons', JSON.stringify(updatedPokemons));
         return updatedPokemons;
       });
@@ -88,7 +88,6 @@ export const PokemonProvider = ({ children }) => {
 
   const getPokemonById = (pokemonId) => {
     const response = pokemons.find(pokemon => pokemon.id == pokemonId);
-    console.log(response)
     return response
   };
   const reset = () => {
